@@ -38,12 +38,12 @@ git clone git://github.com/conscia/node-redis-messagepack.git
 
 var redis = require('redis'),
     serializer = require('redis-messagepack'),
-    client = serializer(redis.createClient(), {
+    client = serializer(redis.createClient({return_buffers : true}), {
         serializer: function(args) {
-            return msgpack.encode(args).toString('hex');
+            return msgpack.encode(args);
         },
         deserializer: function(args) {
-            return msgpack.decode(new Buffer(args, 'hex'));
+            return msgpack.decode(args);
         }
     });
 
