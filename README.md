@@ -75,7 +75,7 @@ console.log(serializer.blacklist);
 
 ### Contributions
 
-Most of the logic came from wakdanker's [node-redis-jsonify](https://github.com/wankdanker/node-redis-jsonify) library.
+Most of the logic came from @wakdanker [node-redis-jsonify](https://github.com/wankdanker/node-redis-jsonify) library.
 Special thanks to him
 
 ### License
