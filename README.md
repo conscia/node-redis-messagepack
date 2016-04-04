@@ -1,28 +1,24 @@
-node-redis-messagepack
-==================
+# Node Redis Messagepack Wrapper
 
-Save JSON representation of objects to redis when using node_redis
+Save messagepack (hex) representation of objects to redis when using node_redis
 
-why
-------
+### Rationale
 
-I basically always save JSON objects to redis. As far as I can tell there isn't 
+Our use case requires us to save json to the database (preferably in an encoded format that fast to encode/decode). As far as I can tell there isn't 
 a way to make @mranney's [node_redis](https://github.com/mranney/node_redis) 
-implicitly convert objects and arrays to JSON before they are sent off to redis.
-So I would always to have to wrap my set and get calls with JSON.parse/stringify
+implicitly convert objects and arrays to msgpack buffers before they are sent off to redis.
+So I would always to have to wrap my set and get calls with msgpack.encode/decode
 nonsense. 
 
-how
-------
+### How
 
 This module exports a function which when passed a RedisClient instance will 
 proxy the send_command method and convert anything that is not a Buffer to and 
-from JSON. I considered modifying the RedisClient prototype automatically when 
+from messagepack. I considered modifying the RedisClient prototype automatically when 
 this module is included in your project, but decided against it because you may
 not want this behavior on all of your redis clients.
 
-install
----------
+### Installation
 
 with npm...
 
@@ -36,37 +32,36 @@ or with git...
 git clone git://github.com/conscia/node-redis-messagepack.git
 ```
 
-example
-------------
+### example
 
 ```javascript
 
-var redis = require('redis')
-	, serializer = require('redis-messagepack')
-	, client = serializer(redis.createClient())
-	;
+var redis = require('redis'),
+    serializer = require('redis-messagepack'),
+    client = serializer(redis.createClient(), {
+        serializer: function(args) {
+            return msgpack.encode(args).toString('hex');
+        },
+        deserializer: function(args) {
+            return msgpack.decode(new Buffer(args, 'hex'));
+        }
+    });
 
-client.set('asdf', { foo : "bar" }, function (err, result) {
-		client.get('asdf', function (err, result) {
-			console.log(result); 
-			// should be { foo : "bar" } and not [Object object]
-			
-			client.quit(function () {	});
-		});
-});
+
+client.set('asdf', {
+    foo: "bar"
+}, function(err, result) {
+    client.get('asdf', function(err, result) {
+        console.log(result);
+        // should be { foo : "bar" } and not [Object object]
+
+        client.quit(function() {});
+    });
+});	
 
 ```
 
-extras
---------
-
-I'm not a huge redis buff yet, so there may be certain commands for which this 
-is not a good idea. One example would be the `list` command. The value returned
-by the `list` command is not JSON. To disable the JSON processing for certain
-commands there is a command blacklist array exported by the module. It currently
-only contains the `list` command. If you know of other commands that should be
-blacklisted by default or there should be special processing, let me know and
-I'll add them. Pull requests welcome also.
+### Extras
 
 ```javascript
 var serializer = require('redis-messagepack');
@@ -78,8 +73,7 @@ serializer.blacklist.push('somecommand');
 console.log(serializer.blacklist);
 ```
 
-license
-----------
+### License
 
 ### The MIT License (MIT)
 
