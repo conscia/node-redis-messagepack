@@ -2,7 +2,6 @@
  * Created by ferron on 4/4/16.
  */
 
-var should = require('chai').should();
 var expect = require('chai').expect;
 
 
@@ -15,12 +14,14 @@ describe('Redis Serialization', function () {
   describe('without json key', function () {
 
     beforeEach(function (done) {
-      client = require("../lib/index")(redis.createClient(), {
+      client = require("../lib/index")(redis.createClient({
+        return_buffers: true
+      }), {
         serializer: function (args) {
-          return msgpack.encode(args).toString('hex');
+          return msgpack.encode(args);
         },
         deserializer: function (args) {
-          return msgpack.decode(new Buffer(args, 'hex'));
+          return msgpack.decode(args);
         }
       });
       done();
