@@ -42,8 +42,8 @@ example
 ```javascript
 
 var redis = require('redis')
-	, jsonify = require('redis-jsonify')
-	, client = jsonify(redis.createClient())
+	, serializer = require('redis-messagepack')
+	, client = serializer(redis.createClient())
 	;
 
 client.set('asdf', { foo : "bar" }, function (err, result) {
@@ -69,13 +69,13 @@ blacklisted by default or there should be special processing, let me know and
 I'll add them. Pull requests welcome also.
 
 ```javascript
-var jsonify = require('redis-messagepack');
+var serializer = require('redis-messagepack');
 
 //add somecommand to the blacklist
-jsonify.blacklist.push('somecommand');
+serializer.blacklist.push('somecommand');
 
 //dump the blacklist to console
-console.log(jsonify.blacklist);
+console.log(serializer.blacklist);
 ```
 
 license
