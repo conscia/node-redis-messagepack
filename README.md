@@ -71,6 +71,13 @@ serializer.blacklist.push('somecommand');
 
 //dump the blacklist to console
 console.log(serializer.blacklist);
+
+// this will prevent 1st & second params from be serialized
+serializer.ignoreIndex([0,1]);
+
+// this will prevent any argument matching the regex from being serialized
+serializer.ignore("_.*"); // any string starting with an underscore will be ignored
+
 ```
 
 ### Contributions
