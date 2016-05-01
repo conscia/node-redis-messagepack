@@ -2,6 +2,10 @@
 
 Save messagepack (hex) representation of objects to redis when using node_redis
 
+
+### Build Status
+[![Build Status](https://semaphoreci.com/api/v1/dwayne/node-redis-messagepack/branches/master/badge.svg)](https://semaphoreci.com/dwayne/node-redis-messagepack)
+
 ### Rationale
 
 Our use case requires us to save json to the database (preferably in an encoded format that fast to encode/decode). As far as I can tell there isn't 
