@@ -3,6 +3,10 @@
 Save messagepack (hex) representation of objects to redis when using node_redis
 
 
+# Breaking Changes
+If you're using a version of node redis prior to v2.6.0 please use the v1.0.3 tag.
+node-redis introduced a [changeset](https://github.com/NodeRedis/node_redis/commit/8b6f2dd35ec232a7adaf8c8da1ea062c0dbb1c78)
+
 ### Build Status
 [![Build Status](https://semaphoreci.com/api/v1/dwayne/node-redis-messagepack/branches/master/badge.svg)](https://semaphoreci.com/dwayne/node-redis-messagepack)
 
