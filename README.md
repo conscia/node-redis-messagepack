@@ -8,8 +8,7 @@ If you're using a version of node redis prior to v2.6.0 please use the v1.0.3 ta
 node-redis introduced a [changeset](https://github.com/NodeRedis/node_redis/commit/8b6f2dd35ec232a7adaf8c8da1ea062c0dbb1c78)
 
 ### Build Status
-[![Build Status](https://semaphoreci.com/api/v1/dwayne/node-redis-messagepack/branches/master/badge.svg)](https://semaphoreci.com/dwayne/node-redis-messagepack)
-
+[![Build Status](https://semaphoreci.com/api/v1/conscia/node-redis-messagepack/branches/master/badge.svg)](https://semaphoreci.com/conscia/node-redis-messagepack)
 ### Rationale
 
 Our use case requires us to save json to the database (preferably in an encoded format that fast to encode/decode). As far as I can tell there isn't 
